@@ -24,6 +24,7 @@
             height: 100%;
             padding-top: 20px;
             color: white;
+            transition: left 0.3s ease;
         }
 
         .sidebar a {
@@ -67,6 +68,17 @@
             cursor: pointer;
             width: 40px;
             height: 40px;
+            z-index: 10;
+        }
+
+        /* Hamburger Menu Button */
+        #hamburger-menu {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            cursor: pointer;
+            font-size: 30px;
+            color: white;
             z-index: 10;
         }
 
@@ -163,6 +175,63 @@
         .item-card button:hover {
             background-color: #218838;
         }
+        
+        /* Cart modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+            padding-top: 50px;
+        }
+
+        .cart-modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .cart-modal-header {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .cart-item .remove {
+            cursor: pointer;
+            color: red;
+        }
+
+        .cart-item .remove:hover {
+            text-decoration: underline;
+        }
+
+        .cart-modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+        }
 
         .notification {
             position: fixed;
@@ -207,8 +276,11 @@
 </head>
 <body>
 
+<!-- Hamburger Menu Button -->
+<div id="hamburger-menu" onclick="toggleSidebar()">&#9776;</div>
+
 <!-- Sidebar Navigation -->
-<div class="sidebar">
+<div class="sidebar" id="sidebar">
     <a href="#" onclick="showCategory('tops')">Tops</a>
 
     <div class="sub-category">
@@ -357,32 +429,33 @@
 
 let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.style.left === '0px') {
+        sidebar.style.left = '-150px';  // Hide sidebar
+    } else {
+        sidebar.style.left = '0px';  // Show sidebar
+    }
+}
+
 
 
 // Function to add items to the cart
 
 function addToCart(id, name, img, description) {
-
     const item = { id, name, img, description };
-
     cartItems.push(item);
 
-    
-
     // Save to localStorage
-
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-
-
     // Update cart count
-
     updateCartCount();
 
-
-
+    // Update the notification message with the product name
+    document.getElementById('notification').textContent = `${name} added to cart!`;
+    
     // Show the notification
-
     showNotification();
 
 }
@@ -392,11 +465,8 @@ function addToCart(id, name, img, description) {
 // Function to update cart item count
 
 function updateCartCount() {
-
     const cartLogo = document.getElementById("cart-logo");
-
     const itemCount = cartItems.length;
-
     cartLogo.setAttribute("data-count", itemCount);  // Update cart badge
 
 }
@@ -429,45 +499,28 @@ function changeSlide(event, direction) {
 // Function to show the notification
 
 function showNotification() {
-
     const notification = document.getElementById("notification");
-
     notification.style.display = "block";
-
-
-
+    
     // Hide after 3 seconds
-
     setTimeout(() => {
-
         notification.style.display = "none";
-
     }, 3000);
-
 }
 
-
-
 // Function to show the selected category and hide others
-
 function showCategory(category) {
 
     // Hide all categories
-
     document.querySelectorAll('.category').forEach(function(section) {
-
         section.classList.remove('active');
-
     });
 
 
 
     // Show the selected category
-
     const selectedCategory = document.getElementById(category + '-section');
-
     if (selectedCategory) {
-
         selectedCategory.classList.add('active');
 
     }
