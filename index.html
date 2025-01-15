@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Your Wardrobe Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 150px;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            padding-top: 20px;
+            color: white;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .sidebar .sub-category {
+            padding-left: 30px;
+        }
+
+        /* Content area */
+        .content {
+            margin-left: 150px;  /* To avoid content being hidden under the sidebar */
+            padding: 20px;
+            width: 100%;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            position: relative;
+        }
+
+        /* Cart Logo */
+        #cart-logo {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            z-index: 10;
+        }
+
+         /* Cart count badge */
+         #cart-logo::after {
+            content: attr(data-count);
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            display: block;
+            z-index: 20;
+        }
+
+        #cart-logo[data-count="0"]::after {
+            display: none; /* Hide the badge if count is 0 */
+        }
+
+        .category {
+            margin-bottom: 40px;
+            display: none;  /* Hide all sections initially */
+        }
+
+        .category.active {
+            display: block;  /* Only show the active section */
+        }
+
+        .category h2 {
+            text-align: center;
+            color: #333;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .item-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .item-card .slider {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+        }
+
+        .item-card .slider img {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .item-card .slider img.active {
+            display: block;
+        }
+
+        .item-card h3 {
+            margin: 10px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .item-card p {
+            padding: 10px;
+            font-size: 1em;
+            color: #777;
+        }
+
+        .item-card button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .item-card button:hover {
+            background-color: #218838;
+        }
+
+        .notification {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        /* Section padding to prevent overlap with fixed sidebar */
+        .section {
+            padding-left: 20px;
+        }
+
+        /* Prev/Next buttons for slider */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 24px;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<div class="sidebar">
+    <a href="#" onclick="showCategory('tops')">Tops</a>
+
+    <div class="sub-category">
+
+        <a href="#" onclick="showCategory('tshirts')">T-Shirts</a>
+
+    </div>
+
+    <a href="#" onclick="showCategory('bottoms')">Bottoms</a>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+    <header>
+        <h1>My Wardrobe Collection</h1>
+        <p>Explore and shortlist your favorite tops, bottoms, and items for any occasion.</p>
+        <!-- Cart logo -->
+        <img id="cart-logo" src="cart-logo.jpg" alt="Cart Logo" onclick="redirectToCartPage()" />
+    </header>
+
+    <!-- Tops Category -->
+    <div class="category" id="tops-section">
+        <h2>Tops</h2>
+        <div class="gallery" id="tops-gallery">
+            
+            <!-- Example Top 1 -->
+            <div class="item-card">
+                <div class="slider">
+                    <img loading="lazy" src="/HUGO_BOSS/Hugo_Black.jpg" class="active">
+                    <img src="/HUGO_BOSS/Hugo_Black_2.jpg">
+                    <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
+                </div>
+                <h3>Slim-fit shirt in stretch cotton with logo hardware</h3>
+                <p>A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, this piece is crafted in peached stretch canvas.</p>
+                <button onclick="addToCart('top1', 'Slim-fit shirt in stretch cotton', '/HUGO_BOSS/Hugo_Black.jpg', 'A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, crafted in peached stretch canvas.')">Add to Cart</button>
+            </div>
+
+            <!-- Example Top 2 -->
+            <div class="item-card">
+                <div class="slider">
+                    <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue.jpg" class="active">
+                    <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue_2.jpg">
+                    <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
+                </div>
+                <h3>Classic Fit Brushed Poplin Shirt</h3>
+                <p>Signature embroidered Pony at the left chest.</p>
+                <button onclick="addToCart('top2', 'Classic Fit Brushed Poplin Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
+            </div>
+
+            <!-- Example Top 3 -->
+            <div class="item-card">
+                <div class="slider">
+                    <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham.jpg" class="active">
+                    <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham2.jpg">
+                    <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
+                </div>
+                <h3>Classic Fit Gingham Oxford Shirt</h3>
+                <p>Multicolored signature embroidered Pony at the left chest.</p>
+                <button onclick="addToCart('top3', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+            </div>
+
+            <!-- Example Top 4 -->
+            <div class="item-card">
+                <div class="slider">
+                    <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_3.jpg" class="active">
+                    <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_4.jpg">
+                    <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
+                </div>
+                <h3>Classic Fit Gingham Oxford Shirt</h3>
+                <p>Multicolored signature embroidered Pony at the left chest.</p>
+                <button onclick="addToCart('top4', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_3.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+            </div>
+
+            <!-- Example Top 5 -->
+            <div class="item-card">
+                <div class="slider">
+                    <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Pink.jpg" class="active">
+                    <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Pink_2.jpg">
+                    <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
+                </div>
+                <h3>Garment-Dyed Oxford Shirt Slim Fit</h3>
+                <p>Signature embroidered Pony at the left chest.</p>
+                <button onclick="addToCart('top5', 'Garment-Dyed Oxford Shirt Slim Fit', '/Polo_Ralph_Lauren/Ralph_Lauren_Pink.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
+            </div>
+
+            <!-- Example Top 6 -->
+            <div class="item-card">
+                <div class="slider">
+                    <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_White.jpg" class="active">
+                    <img src="/Polo_Ralph_Lauren/Ralph_Lauren_White_2.jpg">
+                    <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
+                    <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
+                </div>
+                <h3>The Iconic Oxford Shirt White</h3>
+                <p>Multicolored signature embroidered Pony at the left chest.</p>
+                <button onclick="addToCart('top6', 'The Iconic Oxford Shirt White', '/Polo_Ralph_Lauren/Ralph_Lauren_White.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottoms Category -->
+    <div class="category" id="bottoms-section">
+        <h2>Bottoms</h2>
+        <div class="gallery" id="bottoms-gallery">
+            <!-- Example Bottom 1 -->
+            <div class="item-card">
+                <img src="bottom1.jpg" alt="Tailored Black Pants">
+                <h3>Tailored Black Pants</h3>
+                <p>Classic tailored pants, perfect for both work and dinner outings.</p>
+                <button onclick="addToCart('bottom1', 'Tailored Black Pants', 'bottom1.jpg', 'Classic tailored pants, perfect for both work and dinner outings.')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- New T-Shirts Subcategory -->
+
+ <div class="category" id="t-shirts-section">
+    <h2>T-Shirts</h2>
+    <div class="gallery" id="t-shirts-gallery">
+
+        <!-- Example T-Shirt 1 -->
+        <div class="item-card">
+            <img src="tshirt1.jpg" alt="Graphic T-Shirt">
+            <h3>Graphic T-Shirt</h3>
+            <p>Stylish graphic T-shirt made with 100% cotton for comfort.</p>
+            <button onclick="addToCart('tshirt1', 'Graphic T-Shirt', 'tshirt1.jpg', 'Stylish graphic T-shirt made with 100% cotton for comfort.')">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+<!-- Notification -->
+
+<div id="notification" class="notification">
+
+    Product added to cart!
+
+</div>
+
+<script>
+// Array to store the cart items
+
+let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+
+
+// Function to add items to the cart
+
+function addToCart(id, name, img, description) {
+
+    const item = { id, name, img, description };
+
+    cartItems.push(item);
+
+    
+
+    // Save to localStorage
+
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+
+
+    // Update cart count
+
+    updateCartCount();
+
+
+
+    // Show the notification
+
+    showNotification();
+
+}
+
+
+
+// Function to update cart item count
+
+function updateCartCount() {
+
+    const cartLogo = document.getElementById("cart-logo");
+
+    const itemCount = cartItems.length;
+
+    cartLogo.setAttribute("data-count", itemCount);  // Update cart badge
+
+}
+
+
+
+// Function to show the notification
+
+function showNotification() {
+
+    const notification = document.getElementById("notification");
+
+    notification.style.display = "block";
+
+
+
+    // Hide after 3 seconds
+
+    setTimeout(() => {
+
+        notification.style.display = "none";
+
+    }, 3000);
+
+}
+
+
+
+// Function to show the selected category and hide others
+
+function showCategory(category) {
+
+    // Hide all categories
+
+    document.querySelectorAll('.category').forEach(function(section) {
+
+        section.classList.remove('active');
+
+    });
+
+
+
+    // Show the selected category
+
+    const selectedCategory = document.getElementById(category + '-section');
+
+    if (selectedCategory) {
+
+        selectedCategory.classList.add('active');
+
+    }
+
+}
+
+
+
+// Redirect to cart page
+
+function redirectToCartPage() {
+
+    const cartData = encodeURIComponent(JSON.stringify(cartItems));
+
+    const cartPageURL = `checkout.html?cart=${cartData}`;
+
+    window.location.href = cartPageURL;
+
+}
+
+
+
+// Default to showing the 'tops' category
+
+window.onload = function() {
+
+    showCategory('tops');
+
+    updateCartCount();
+
+};
+</script>
+
+</body>
+</html>

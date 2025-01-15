@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Checkout - Your Wardrobe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        #cart-items-container {
+            display: flex;                   
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #fff;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            height: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .cart-item img {
+            width: 280px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item div {
+            margin-top: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .cart-item button {
+            margin-top: 5px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .cart-item button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Shopping Cart</h1>
+</header>
+
+<div id="cart-items-container"></div>
+
+<script>
+// Load the cart items directly from localStorage
+const cartData = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+// Function to remove item from cart
+function removeFromCart(index) {
+    // Remove item from the cartItems array
+    cartData.splice(index, 1);
+
+    // Save the updated cartItems to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cartData));
+
+    // Update the cart display
+    displayCartItems();
+}
+
+// Function to display cart items
+function displayCartItems() {
+    const cartContainer = document.getElementById("cart-items-container");
+    cartContainer.innerHTML = "";  // Clear any existing items
+
+    if (cartData.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";  // If no items in cart, show empty message
+    } else {
+        cartData.forEach((item, index) => {
+            const itemElement = document.createElement("div");
+            itemElement.classList.add("cart-item");
+            itemElement.innerHTML = `
+                <div style="text-align: center;">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div style="margin-top: 10px; font-size: 14px; color: #333;">${item.name}</div>
+                </div>
+                <button onclick="removeFromCart(${index})">Remove</button>
+            `;
+            cartContainer.appendChild(itemElement);
+        });
+    }
+}
+
+// Display the cart items when the page loads
+window.onload = function() {
+    displayCartItems();
+};
+</script>
+
+</body>
+</html>
