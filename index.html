@@ -401,6 +401,29 @@ function updateCartCount() {
 
 }
 
+function changeSlide(event, direction) {
+    const slider = event.target.closest('.slider'); // Find the closest slider container
+    const images = slider.querySelectorAll('img'); // Get all the images in the slider
+    let activeIndex = Array.from(images).findIndex(img => img.classList.contains('active')); // Find the index of the active image
+
+    // Remove the 'active' class from the current active image
+    images[activeIndex].classList.remove('active');
+
+    // Calculate the new index
+    let newIndex = activeIndex + direction;
+
+    // Wrap around if the index is out of bounds
+    if (newIndex >= images.length) {
+        newIndex = 0;
+    } else if (newIndex < 0) {
+        newIndex = images.length - 1;
+    }
+
+    // Set the new image as active
+    images[newIndex].classList.add('active');
+}
+
+
 
 
 // Function to show the notification
