@@ -274,6 +274,36 @@
             padding-top: 10px;
         }
 
+        .filter-container {
+            margin: 20px 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group select {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .item-card.hidden {
+            display: none;
+        }
+
         .notification {
             position: fixed;
             top: 10px;
@@ -349,13 +379,36 @@
 
         <!-- category for Shirts -->
         <div class="category" id="shirts-section">
+
             <h3>Shirts</h3>
+
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label>Brand:</label>
+                    <select id="brand-filter" onchange="filterShirts()">
+                        <option value="all">All Brands</option>
+                        <option value="Hugo Boss">Hugo Boss</option>
+                        <option value="Ralph Lauren">Ralph Lauren</option>
+                    </select>
+                </div>
+                <!-- <div class="filter-group">
+                    <label>Color:</label>
+                    <select id="color-filter" onchange="filterShirts()">
+                        <option value="all">All Colors</option>
+                        <option value="black">Black</option>
+                        <option value="blue">Blue</option>
+                        <option value="pink">Pink</option>
+                        <option value="white">White</option>
+                    </select>
+                </div> -->
+            </div>
+
             <div class="gallery" id="shirts-gallery">
 
                 <!-- Example Shirt 1 -->
-                <div class="item-card">
+                <div class="item-card" data-brand="Hugo Boss">
                     <div class="slider">
-                        <img loading="lazy" src="/HUGO_BOSS/Hugo_Black.jpg" class="active">
+                        <img loading="lazy" src="/HUGO_BOSS/HUGO_Black.jpg" class="active">
                         <img src="/HUGO_BOSS/Hugo_Black_2.jpg">
                         <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
                         <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
@@ -366,7 +419,7 @@
                 </div>
 
                 <!-- Example Shirt 2 -->
-                <div class="item-card">
+                <div class="item-card" data-brand="Ralph Lauren">
                     <div class="slider">
                         <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue.jpg" class="active">
                         <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue_2.jpg">
@@ -379,7 +432,7 @@
                 </div>
 
                 <!-- Example Shirt 3 -->
-                <div class="item-card">
+                <div class="item-card" data-brand="Ralph Lauren">
                     <div class="slider">
                         <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham.jpg" class="active">
                         <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham2.jpg">
@@ -392,7 +445,7 @@
                 </div>
 
                 <!-- Example Shirt 4 -->
-                <div class="item-card">
+                <div class="item-card" data-brand="Ralph Lauren">
                     <div class="slider">
                         <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_3.jpg" class="active">
                         <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_4.jpg">
@@ -405,7 +458,7 @@
                 </div>
 
                 <!-- Example Shirt 5 -->
-                <div class="item-card">
+                <div class="item-card" data-brand="Ralph Lauren">
                     <div class="slider">
                         <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_Pink.jpg" class="active">
                         <img src="/Polo_Ralph_Lauren/Ralph_Lauren_Pink_2.jpg">
@@ -418,7 +471,7 @@
                 </div>
 
                 <!-- Example Shirt 6 -->
-                <div class="item-card">
+                <div class="item-card" data-brand="Ralph Lauren">
                     <div class="slider">
                         <img loading="lazy" src="/Polo_Ralph_Lauren/Ralph_Lauren_White.jpg" class="active">
                         <img src="/Polo_Ralph_Lauren/Ralph_Lauren_White_2.jpg">
@@ -618,6 +671,25 @@ function showCategory(category) {
     }
 }
 
+function filterShirts() {
+    const brandFilter = document.getElementById('brand-filter').value;
+    //const colorFilter = document.getElementById('color-filter').value;
+    const shirts = document.querySelectorAll('#shirts-gallery .item-card');
+
+    shirts.forEach(shirt => {
+        const brand = shirt.dataset.brand;
+        //const color = shirt.dataset.color;
+        
+        const brandMatch = brandFilter === 'all' || brand === brandFilter;
+        //const colorMatch = colorFilter === 'all' || color === colorFilter;
+
+        if (brandMatch) {
+            shirt.classList.remove('hidden');
+        } else {
+            shirt.classList.add('hidden');
+        }
+    });
+}
 
 // Redirect to cart page
 
