@@ -304,7 +304,7 @@
         <h1>My Wardrobe Collection</h1>
         <p>Explore and shortlist your favorite tops, bottoms, and items for any occasion.</p>
         <!-- Cart logo -->
-        <img id="cart-logo" src="cart-logo.jpg" alt="Cart Logo" onclick="redirectToCartPage()" />
+        <img id="cart-logo" src="wishlist-logo.png" alt="Cart Logo" onclick="redirectToCartPage()" />
     </header>
 
     <!-- Tops Category -->
@@ -326,7 +326,7 @@
                     </div>
                     <h3>Slim-fit shirt in stretch cotton with logo hardware</h3>
                     <p>A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, crafted in peached stretch canvas.</p>
-                    <button onclick="addToCart('top1', 'Slim-fit shirt in stretch cotton', '/HUGO_BOSS/Hugo_Black.jpg', 'A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, crafted in peached stretch canvas.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top1', 'Slim-fit shirt in stretch cotton', '/HUGO_BOSS/Hugo_Black.jpg', 'A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, crafted in peached stretch canvas.')">Add to Cart</button>
                 </div>
 
                 <!-- Example Shirt 2 -->
@@ -339,7 +339,7 @@
                     </div>
                     <h3>Classic Fit Brushed Poplin Shirt</h3>
                     <p>Signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToCart('top2', 'Classic Fit Brushed Poplin Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top2', 'Classic Fit Brushed Poplin Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
                 </div>
 
                 <!-- Example Shirt 3 -->
@@ -352,7 +352,7 @@
                     </div>
                     <h3>Classic Fit Gingham Oxford Shirt</h3>
                     <p>Multicolored signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToCart('top3', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top3', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
                 </div>
 
                 <!-- Example Shirt 4 -->
@@ -365,7 +365,7 @@
                     </div>
                     <h3>Classic Fit Gingham Oxford Shirt</h3>
                     <p>Multicolored signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToCart('top4', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_3.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top4', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_3.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
                 </div>
 
                 <!-- Example Shirt 5 -->
@@ -378,7 +378,7 @@
                     </div>
                     <h3>Garment-Dyed Oxford Shirt Slim Fit</h3>
                     <p>Signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToCart('top5', 'Garment-Dyed Oxford Shirt Slim Fit', '/Polo_Ralph_Lauren/Ralph_Lauren_Pink.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top5', 'Garment-Dyed Oxford Shirt Slim Fit', '/Polo_Ralph_Lauren/Ralph_Lauren_Pink.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
                 </div>
 
                 <!-- Example Shirt 6 -->
@@ -391,7 +391,7 @@
                     </div>
                     <h3>The Iconic Oxford Shirt White</h3>
                     <p>Multicolored signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToCart('top6', 'The Iconic Oxford Shirt White', '/Polo_Ralph_Lauren/Ralph_Lauren_White.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top6', 'The Iconic Oxford Shirt White', '/Polo_Ralph_Lauren/Ralph_Lauren_White.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
                 </div>
             </div>
         </div>
@@ -406,7 +406,7 @@
                 <img src="bottom1.jpg" alt="Tailored Black Pants">
                 <h3>Tailored Black Pants</h3>
                 <p>Classic tailored pants, perfect for both work and dinner outings.</p>
-                <button onclick="addToCart('bottom1', 'Tailored Black Pants', 'bottom1.jpg', 'Classic tailored pants, perfect for both work and dinner outings.')">Add to Cart</button>
+                <button onclick="addToWishlist('bottom1', 'Tailored Black Pants', 'bottom1.jpg', 'Classic tailored pants, perfect for both work and dinner outings.')">Add to Cart</button>
             </div>
         </div>
     </div>
@@ -423,7 +423,7 @@
             <img src="tshirt1.jpg" alt="Graphic T-Shirt">
             <h3>Graphic T-Shirt</h3>
             <p>Stylish graphic T-shirt made with 100% cotton for comfort.</p>
-            <button onclick="addToCart('tshirt1', 'Graphic T-Shirt', 'tshirt1.jpg', 'Stylish graphic T-shirt made with 100% cotton for comfort.')">Add to Cart</button>
+            <button onclick="addToWishlist('tshirt1', 'Graphic T-Shirt', 'tshirt1.jpg', 'Stylish graphic T-shirt made with 100% cotton for comfort.')">Add to Cart</button>
             </div>
         </div>
     </div>
@@ -451,11 +451,26 @@ function toggleSidebar() {
     }
 }
 
+// Function to check if item already exists in cart
+function isItemInCart(id) {
+    return cartItems.some(item => item.id === id);
+}
 
 
 // Function to add items to the cart
 
-function addToCart(id, name, img, description) {
+function addToWishlist(id, name, img, description) {
+    
+    // Check if item already exists in cart
+    if (isItemInCart(id)) {
+        // Show notification that item is already in cart
+        document.getElementById('notification').textContent = `${name} is already in your wishlist!`;
+        document.getElementById('notification').style.backgroundColor = '#ffc107'; // Warning color
+        showNotification();
+        return;
+    }
+
+    // If item doesn't exist, add it to cart
     const item = { id, name, img, description };
     cartItems.push(item);
 
@@ -466,14 +481,12 @@ function addToCart(id, name, img, description) {
     updateCartCount();
 
     // Update the notification message with the product name
-    document.getElementById('notification').textContent = `${name} added to cart!`;
-
+    document.getElementById('notification').textContent = `${name} added to Wishlist!`;
+    document.getElementById('notification').style.backgroundColor = '#28a745'; // Success color
     // Show the notification
     showNotification();
 
 }
-
-
 
 // Function to update cart item count
 
@@ -505,8 +518,6 @@ function changeSlide(event, direction) {
     // Set the new image as active
     images[newIndex].classList.add('active');
 }
-
-
 
 
 // Function to show the notification
@@ -576,9 +587,7 @@ window.onload = function() {
 function redirectToCartPage() {
 
     const cartData = encodeURIComponent(JSON.stringify(cartItems));
-
     const cartPageURL = `checkout.html?cart=${cartData}`;
-
     window.location.href = cartPageURL;
 
 }
@@ -588,9 +597,7 @@ function redirectToCartPage() {
 // Default to showing the 'tops' category
 
 window.onload = function() {
-
     showCategory('tops');
-
     updateCartCount();
 
 };
