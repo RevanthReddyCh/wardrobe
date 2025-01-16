@@ -77,6 +77,41 @@
             z-index: 10;
         }
 
+            /* Cart Logo and Counter Styles */
+        #cart-container {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        #cart-logo {
+            width: 40px;
+            height: 40px;
+            z-index: 10;
+        }
+
+        #cart-counter {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff0000;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 20px;
+            text-align: center;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hide counter when empty */
+        #cart-counter.hidden {
+            display: none;
+        }
+
         /* Hamburger Menu Button */
         #hamburger-menu {
             position: absolute;
@@ -88,7 +123,7 @@
             z-index: 10;
         }
 
-         /* Cart count badge */
+         /* Cart count badge
          #cart-logo::after {
             content: attr(data-count);
             position: absolute;
@@ -106,7 +141,7 @@
 
         #cart-logo[data-count="0"]::after {
             display: none; /* Hide the badge if count is 0 */
-        }
+        /*} */
 
         .category {
             margin-bottom: 40px;
@@ -304,7 +339,8 @@
         <h1>My Wardrobe Collection</h1>
         <p>Explore and shortlist your favorite tops, bottoms, and items for any occasion.</p>
         <!-- Cart logo -->
-        <img id="cart-logo" src="wishlist-logo.png" alt="Cart Logo" onclick="redirectToCartPage()" />
+        <img id="cart-logo" src="wishlist-logo.png" alt="Cart Logo" onclick="redirectToCartPage()"/>
+        <div id="cart-counter" class="hidden">0</div>
     </header>
 
     <!-- Tops Category -->
@@ -326,7 +362,7 @@
                     </div>
                     <h3>Slim-fit shirt in stretch cotton with logo hardware</h3>
                     <p>A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, crafted in peached stretch canvas.</p>
-                    <button onclick="addToWishlist('top1', 'Slim-fit shirt in stretch cotton', '/HUGO_BOSS/Hugo_Black.jpg', 'A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, crafted in peached stretch canvas.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top1', 'Slim-fit shirt in stretch cotton', '/HUGO_BOSS/Hugo_Black.jpg', 'A slim-fitting shirt by HUGO Menswear. Featuring a split-logo metal trim on the collar, crafted in peached stretch canvas.')">Add to Wishlist</button>
                 </div>
 
                 <!-- Example Shirt 2 -->
@@ -339,7 +375,7 @@
                     </div>
                     <h3>Classic Fit Brushed Poplin Shirt</h3>
                     <p>Signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToWishlist('top2', 'Classic Fit Brushed Poplin Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top2', 'Classic Fit Brushed Poplin Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Sky_Blue.jpg', 'Signature embroidered Pony at the left chest.')">Add to Wishlist</button>
                 </div>
 
                 <!-- Example Shirt 3 -->
@@ -352,7 +388,7 @@
                     </div>
                     <h3>Classic Fit Gingham Oxford Shirt</h3>
                     <p>Multicolored signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToWishlist('top3', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top3', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Wishlist</button>
                 </div>
 
                 <!-- Example Shirt 4 -->
@@ -365,7 +401,7 @@
                     </div>
                     <h3>Classic Fit Gingham Oxford Shirt</h3>
                     <p>Multicolored signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToWishlist('top4', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_3.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top4', 'Classic Fit Gingham Oxford Shirt', '/Polo_Ralph_Lauren/Ralph_Lauren_Gingham_3.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Wishlist</button>
                 </div>
 
                 <!-- Example Shirt 5 -->
@@ -378,7 +414,7 @@
                     </div>
                     <h3>Garment-Dyed Oxford Shirt Slim Fit</h3>
                     <p>Signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToWishlist('top5', 'Garment-Dyed Oxford Shirt Slim Fit', '/Polo_Ralph_Lauren/Ralph_Lauren_Pink.jpg', 'Signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top5', 'Garment-Dyed Oxford Shirt Slim Fit', '/Polo_Ralph_Lauren/Ralph_Lauren_Pink.jpg', 'Signature embroidered Pony at the left chest.')">Add to Wishlist</button>
                 </div>
 
                 <!-- Example Shirt 6 -->
@@ -391,7 +427,7 @@
                     </div>
                     <h3>The Iconic Oxford Shirt White</h3>
                     <p>Multicolored signature embroidered Pony at the left chest.</p>
-                    <button onclick="addToWishlist('top6', 'The Iconic Oxford Shirt White', '/Polo_Ralph_Lauren/Ralph_Lauren_White.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Cart</button>
+                    <button onclick="addToWishlist('top6', 'The Iconic Oxford Shirt White', '/Polo_Ralph_Lauren/Ralph_Lauren_White.jpg', 'Multicolored signature embroidered Pony at the left chest.')">Add to Wishlist</button>
                 </div>
             </div>
         </div>
@@ -406,7 +442,7 @@
                 <img src="bottom1.jpg" alt="Tailored Black Pants">
                 <h3>Tailored Black Pants</h3>
                 <p>Classic tailored pants, perfect for both work and dinner outings.</p>
-                <button onclick="addToWishlist('bottom1', 'Tailored Black Pants', 'bottom1.jpg', 'Classic tailored pants, perfect for both work and dinner outings.')">Add to Cart</button>
+                <button onclick="addToWishlist('bottom1', 'Tailored Black Pants', 'bottom1.jpg', 'Classic tailored pants, perfect for both work and dinner outings.')">Add to Wishlist</button>
             </div>
         </div>
     </div>
@@ -423,7 +459,7 @@
             <img src="tshirt1.jpg" alt="Graphic T-Shirt">
             <h3>Graphic T-Shirt</h3>
             <p>Stylish graphic T-shirt made with 100% cotton for comfort.</p>
-            <button onclick="addToWishlist('tshirt1', 'Graphic T-Shirt', 'tshirt1.jpg', 'Stylish graphic T-shirt made with 100% cotton for comfort.')">Add to Cart</button>
+            <button onclick="addToWishlist('tshirt1', 'Graphic T-Shirt', 'tshirt1.jpg', 'Stylish graphic T-shirt made with 100% cotton for comfort.')">Add to Wishlist</button>
             </div>
         </div>
     </div>
@@ -491,9 +527,17 @@ function addToWishlist(id, name, img, description) {
 // Function to update cart item count
 
 function updateCartCount() {
-    const cartLogo = document.getElementById("cart-logo");
+    const cartCounter = document.getElementById("cart-counter");
     const itemCount = cartItems.length;
-    cartLogo.setAttribute("data-count", itemCount);  // Update cart badge
+
+    if (itemCount > 0) {
+        cartCounter.textContent = itemCount;
+        cartCounter.classList.remove('hidden');
+    } else {
+        cartCounter.textContent = '0';
+        cartCounter.classList.add('hidden');
+    }
+    //cartLogo.setAttribute("data-count", itemCount);  // Update cart badge
 
 }
 
@@ -573,13 +617,6 @@ function showCategory(category) {
             break;
     }
 }
-
-// Initialize the page with Tops category
-window.onload = function() {
-    showCategory('Tops');
-    updateCartCount();
-};
-
 
 
 // Redirect to cart page
