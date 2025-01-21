@@ -904,7 +904,22 @@ function redirectToCartPage() {
 // Default to showing the 'tops' category
 
 window.onload = function() {
-    showCategory('tops');
+    // Hide all category sections first
+    const allCategories = document.querySelectorAll('.category');
+    allCategories.forEach(function(categoryElement) {
+        categoryElement.style.display = 'none';
+    });
+
+    // Show Tops section (parent section)
+    document.getElementById('tops-section').style.display = 'block';
+    
+    // Show the tops subcategory menu in sidebar
+    document.getElementById('tops-subcategory').style.display = 'block';
+    
+    // Show the shirts section
+    document.getElementById('shirts-section').style.display = 'block';
+    
+    // Update cart count
     updateCartCount();
 
 };
