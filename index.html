@@ -392,6 +392,7 @@
                         <option value="Calvin Klein">Calvin Klein</option>
                         <option value="Armani Exchange">Armani Exchange</option>
                         <option value="Karl Lagerfeld">Karl Lagerfeld</option>
+                        <option value="Hackett">Hackett</option>
                     </select>
                 </div>
                 <!-- <div class="filter-group">
@@ -407,6 +408,19 @@
             </div>
 
             <div class="gallery" id="shirts-gallery">
+
+                <!-- Example Shirt 1 -->
+                <div class="item-card" data-brand="Hackett">
+                    <div class="slider">
+                        <img loading="lazy" src="/Hackett/Hackett_1.jpg" class="active">
+                        <img src="/Hackett/Hackett_2.jpg">
+                        <button class="prev" onclick="changeSlide(event, -1)">&#10094;</button>
+                        <button class="next" onclick="changeSlide(event, 1)">&#10095;</button>
+                    </div>
+                    <h3>HACKETT ASTON MARTIN Spread Collar Cotton Shirt.</h3>
+                    <p>Discreet HACKETT logo on the back collar.</p>
+                    <button onclick="addToWishlist('top1', 'HACKETT ASTON MARTIN Spread Collar Cotton Shirt.', '/Hackett/Hackett_1.jpg', 'Discreet HACKETT logo on the back collar.')">Add to Wishlist</button>
+                </div>
 
                 <!-- Example Shirt 1 -->
                 <div class="item-card" data-brand="Hugo Boss">
